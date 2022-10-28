@@ -1,0 +1,18 @@
+Package: RiseTools
+Title: Tools for my RISE project
+Version: 0.0.0.9000
+Authors@R: 
+    person("Jennifer", "Enright", , "jee50@georgetown.edu", role = c("aut","cre"))
+Description: This package includes a range of functions designed to be useful for my RISE Project. However, they're highly flexible and will hopefully be useful to other members in my lab and beyond.
+Encoding: UTF-8
+License: 'use_mit_license()', 'use_gpl3_license()' or friends to pick a license
+Imports: plater, tidyr, writexl
+Roxygen: list(markdown = FALSE)
+RoxygenNote: 7.2.1
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

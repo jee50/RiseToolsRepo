@@ -1,0 +1,64 @@
+---
+title: "Rise_Tools_Vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Rise_Tools_Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(RiseTools)
+```
+
+# Overview
+
+## tabulate_plate()
+
+tabulate_plate() is a function build to transform 96-well plate data into a format more compatible to importing into GraphPad prism, handling biological and technical replicates differently. It combines functionalities from plateR, tidyR, and writeXL to streamline the tabulation of plate data. As per plateR specifications, the input file must be a .csv that lists the attributes of each well one-by-one. The function returns a data frame and also writes a .xlsx file to the working directory of the tabulated data with an identifying "tabular_" prefix.
+
+The "identifiers" argument specifies the names of the columns that uniquely identify observations (for examples, in the sample ELISA data set, each unique observation has a specific Group, Number, and Dilution factor). Group_by is the name of the column that the data will be pivot_wider upon. PlateR would typically return technical replicates 1 and 2 as separate, independent observations, but by specifying "group_by = Replicate", the replicate values for each Group, Number, and Dilution factor will be arranged side-by-side. The data argument specifies the plate reader raw data (the response) columns.
+
+*bold* Because plateR requires .csv files, this example makes reference to a local file. However, the sample_plate_data.rda file included in the package can be used as a reference for properly formatted data for use with this function *bold*
+
+```{r}
+
+#tabular_plate <- tabulate_plate("10252022_PTCTgliadin_ELISA.csv", c("Group", "Number", "Dilution"), "Replicate", c("PT gliadin", "CT gliadin"))
+
+#tabular_plate
+```
+
+
+## send_for_sequencing()
+
+Send_for_sequencing is a function that helps determining dilution calculations to quickly and accurately send samples for sequencing. Based on the method of sequencing (PCR or full plasmid, specificed by "method" argument) and the length of the amplicon/plasmid (specifed by "length" argument), this function calculates the volumes of sample, water, and primer that need to be mixed together to send each sample in the input vector for sequencing based on their concentrations. For this function, legnth measures basepairs, concentration is assumed to be in ng/ul, and water/sample/primer volumes are provided in ul.
+
+```{r}
+
+#load(file = "data/sample_pcr_data.rda")
+
+#seq_data <- send_for_sequencing(method = "PCR", length = 2345, concentration = pcr_data$Concentration)
+#seq_data
+```
+
+
+## codon_checker()
+
+Codon_checker is a function used to assist in evaluating synonymous mutations that appear in sequence alignment analyses. Because the availability of tRNAs corresponding to each codon varies widely, it is important to compare the frequency of the reference codon to the mutated codon. This function has built-in codon tables for *italics* E. coli *italics* and *italics* S. aureus. *italics*
+
+```{r}
+
+#codon_checker(reference_codons = c("AAA", "CCG"), mutant_codons = c("AAU", "CGG"), species = "e.coli")
+
+```
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
